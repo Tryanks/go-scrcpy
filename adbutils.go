@@ -9,8 +9,9 @@ import (
 
 var adbPath = "adb"
 
-func SetAdbPath(path string) {
+func SetAdbPath(path string) error {
 	adbPath = path
+	return CheckAdb()
 }
 
 func CheckAdb() error {
@@ -22,7 +23,7 @@ func CheckAdb() error {
 		return err
 	}
 	if !strings.Contains(out.String(), "Android Debug Bridge version") {
-		return errors.New("adb not found")
+		return errors.New("adb not found, please check if Adb environment exists on your system. To specify the Adb path, use the SetAdbPath(path) method")
 	}
 	return nil
 }
